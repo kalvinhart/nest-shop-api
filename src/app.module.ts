@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config, { EnvironmentVariables } from './config/config';
+import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import config, { EnvironmentVariables } from './config/config';
       }),
       inject: [ConfigService],
     }),
+    UserModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
