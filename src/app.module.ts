@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import config, { EnvironmentVariables } from './config/config';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { UserController } from './user/user.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,8 +30,9 @@ import { ProductModule } from './product/product.module';
     }),
     UserModule,
     ProductModule,
+    AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
