@@ -5,6 +5,7 @@ export interface EnvironmentVariables {
   DATABASE_USERNAME: string;
   DATABASE_PASSWORD: string;
   DATABASE_NAME: string;
+  JWT_KEY: string;
 }
 
 export default () => ({
@@ -13,4 +14,5 @@ export default () => ({
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
   },
+  jwtKey: process.env.JWT_KEY,
 });

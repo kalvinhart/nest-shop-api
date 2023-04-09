@@ -8,6 +8,8 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth/auth.controller';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -32,7 +34,7 @@ import { AuthModule } from './auth/auth.module';
     ProductModule,
     AuthModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService],
+  controllers: [AppController, UserController, AuthController],
+  providers: [AppService, UserService],
 })
 export class AppModule {}
