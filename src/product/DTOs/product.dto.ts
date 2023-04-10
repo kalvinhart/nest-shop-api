@@ -1,8 +1,8 @@
-import { Product } from '../entities/product.entity';
+import { ProductDocument } from '../schemas/product.schema';
 
 export class ProductDto {
-  constructor(product: Product) {
-    this.id = product.id;
+  constructor(product: ProductDocument) {
+    this._id = product._id.toString();
     this.name = product.name;
     this.brand = product.brand;
     this.description = product.description;
@@ -11,7 +11,7 @@ export class ProductDto {
     this.inStock = product.inStock;
   }
 
-  id: string;
+  _id: string;
   name: string;
   brand: string;
   description: string;

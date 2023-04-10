@@ -7,8 +7,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get(':id')
-  getUserById(@Param('id') id: string): UserDto {
-    const user = this.userService.getUserById(id);
-    return new UserDto();
+  async getUserById(@Param('id') id: string): Promise<UserDto> {
+    const user = await this.userService.getUserById(id);
+    return new UserDto(user);
   }
 }
