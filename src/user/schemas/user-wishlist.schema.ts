@@ -3,7 +3,7 @@ import { User } from './user.schema';
 import { Product } from 'src/product/schemas/product.schema';
 import { Prop, Schema } from '@nestjs/mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class UserWishlist {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;

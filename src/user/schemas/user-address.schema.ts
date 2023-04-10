@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { User } from './user.schema';
 
-@Schema()
+@Schema({ timestamps: true })
 export class UserAddress {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
