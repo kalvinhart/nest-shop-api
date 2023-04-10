@@ -10,9 +10,20 @@ import { UserService } from './user/user.service';
 import { DatabaseModule } from './database/database.module';
 import { AuthService } from './auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
+import config from './config/config';
 
 @Module({
-  imports: [UserModule, ProductModule, AuthModule, DatabaseModule, JwtModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [config],
+    }),
+    UserModule,
+    ProductModule,
+    AuthModule,
+    DatabaseModule,
+    JwtModule,
+  ],
   controllers: [AppController, UserController, AuthController],
   providers: [AppService, UserService, AuthService],
 })
