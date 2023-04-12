@@ -1,5 +1,7 @@
+import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Category } from 'src/categories/schemas/category.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -22,6 +24,11 @@ export class Product {
 
   @Prop()
   description: string;
+
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  })
+  categories: Category[];
 
   @Prop()
   imageUrl: string;
