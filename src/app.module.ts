@@ -11,6 +11,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthService } from './auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { CategoriesModule } from './categories/categories.module';
 import config from './config/config';
 
 @Module({
@@ -23,6 +24,7 @@ import config from './config/config';
     AuthModule,
     DatabaseModule,
     JwtModule,
+    CategoriesModule,
   ],
   controllers: [AppController, UserController, AuthController],
   providers: [AppService, UserService, AuthService],
