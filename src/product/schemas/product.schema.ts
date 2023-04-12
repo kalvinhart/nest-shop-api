@@ -5,13 +5,19 @@ export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({ timestamps: true })
 export class Product {
-  @Prop()
+  @Prop({
+    required: true,
+  })
   name: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   brand: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   price: number;
 
   @Prop()

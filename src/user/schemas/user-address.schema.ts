@@ -7,21 +7,32 @@ export class UserAddress {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   line1: string;
 
   @Prop()
   line2: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   city: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   county: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   country: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+    minlength: 5,
+  })
   postCode: string;
 }
