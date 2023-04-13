@@ -11,8 +11,10 @@ export class CategoriesService {
     @InjectModel('Category') private categoryModel: Model<Category>,
   ) {}
 
-  async getAllCategories() {
-    return await this.categoryModel.find({});
+  async getAllCategories(): Promise<CategoryDto[]> {
+    const categories = await this.categoryModel.find({});
+
+    return categories.map((category) => new CategoryDto(category));
   }
 
   async createCategory(
