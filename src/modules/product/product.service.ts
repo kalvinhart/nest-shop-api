@@ -8,16 +8,13 @@ import { ProductQueryResponse } from './types/ProductQueryResponse';
 import { ProductUtilities } from './utils/ProductUtilities';
 import { CreateProductDto } from './DTOs/create-product.dto';
 import { UpdateProductDto } from './DTOs/update-product-dto';
+import { ProductFiltersDto } from './DTOs/product-filters.dto';
 
 @Injectable()
 export class ProductService {
-  constructor(
-    @InjectModel(Product.name) private productModel: Model<Product>,
-  ) {}
+  constructor(@InjectModel(Product.name) private productModel: Model<Product>) {}
 
-  async getAllProducts(
-    searchFilters: ProductSearchFilters,
-  ): Promise<ProductQueryResponse> {
+  async getAllProducts(searchFilters: ProductSearchFilters): Promise<ProductQueryResponse> {
     const { page, pageSize } = searchFilters;
 
     let query = this.productModel.find();
@@ -63,14 +60,10 @@ export class ProductService {
   }
 
   async updateProduct(updateProductDto: UpdateProductDto): Promise<ProductDto> {
-    const updatedProduct = await this.productModel.findByIdAndUpdate(
-      updateProductDto._id,
-      updateProductDto,
-      {
-        runValidators: true,
-        new: true,
-      },
-    );
+    const updatedProduct = await this.productModel.findByIdAndUpdate(updateProductDto._id, updateProductDto, {
+      runValidators: true,
+      new: true,
+    });
 
     return new ProductDto(updatedProduct);
   }
@@ -81,5 +74,45 @@ export class ProductService {
 
   async deleteManyProducts(productIds: string[]): Promise<void> {
     await this.productModel.deleteMany({ _id: { $in: productIds } });
+  }
+
+  async getProductFilters(): Promise<ProductFiltersDto> {
+    const brands = await this.productModel.aggregate([
+      {
+        $group: {
+          _id: '$brand',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    const sizes = await this.productModel.aggregate([
+      {
+        $group: {
+          _id: '$size',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    const colors = await this.productModel.aggregate([
+      {
+        $group: {
+          _id: '$color',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    return new ProductFiltersDto({ brands, colors, sizes });
   }
 }
