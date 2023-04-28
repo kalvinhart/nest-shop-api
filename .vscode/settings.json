@@ -1,0 +1,5 @@
+{
+    "prettier.configPath": ".prettierrc",
+    "prettier.endOfLine": "auto",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
