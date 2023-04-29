@@ -13,11 +13,16 @@ import { ProductModule } from './modules/product/product.module';
 import { UserController } from './modules/user/user.controller';
 import { UserModule } from './modules/user/user.module';
 import { UserService } from './modules/user/user.service';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import stripeConfig from './config/stripe.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [baseConfig, databaseConfig],
+      load: [baseConfig, databaseConfig, stripeConfig],
+      isGlobal: true,
+      cache: true,
     }),
     UserModule,
     ProductModule,
@@ -26,6 +31,8 @@ import { UserService } from './modules/user/user.service';
     JwtModule,
     CategoriesModule,
     CoreModule,
+    PaymentsModule,
+    OrdersModule,
   ],
   controllers: [UserController, AuthController],
   providers: [UserService, AuthService],
