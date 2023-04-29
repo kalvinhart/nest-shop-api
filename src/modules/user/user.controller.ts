@@ -3,7 +3,7 @@ import { UserDto } from './DTOs/user.dto';
 import { UserService } from './user.service';
 import { AddToWishlistDto } from './DTOs/add-to-wishlist.dto';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
