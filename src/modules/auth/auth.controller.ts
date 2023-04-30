@@ -1,10 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { SignInDto } from './DTOs/sign-in.dto';
 import { CreateUserDto } from './DTOs/create-user.dto';
 import { AuthService } from './auth.service';
 import { SignInResultDto } from './DTOs/sign-in-result.dto';
 import { UserDto } from '../user/DTOs/user.dto';
-import { UserDocument } from '../user/schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -12,13 +11,21 @@ export class AuthController {
 
   @Post('login')
   async signIn(@Body() signInDto: SignInDto): Promise<SignInResultDto> {
-    const { user, token } = await this.authService.signIn(signInDto);
-    return new SignInResultDto(user, token);
+    try {
+      return await this.authService.signIn(signInDto);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Post('register')
   async createUser(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    const user: UserDocument = await this.authService.createUser(createUserDto);
-    return new UserDto(user);
+    try {
+      return await this.authService.createUser(createUserDto);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

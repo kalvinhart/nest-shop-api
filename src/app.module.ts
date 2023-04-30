@@ -28,7 +28,7 @@ import stripeConfig from './config/stripe.config';
     ProductModule,
     AuthModule,
     DatabaseModule,
-    JwtModule,
+    JwtModule.register({ global: true }),
     CategoriesModule,
     CoreModule,
     PaymentsModule,
