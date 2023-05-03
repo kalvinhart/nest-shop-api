@@ -1,16 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { User, UserDocument } from './schemas/user.schema';
-import { AddToWishlistDto } from './DTOs/add-to-wishlist.dto';
-import { Product } from '../product/schemas/product.schema';
-import { RemoveFromWishlistDto } from './DTOs/remove-from-wishlist.dto';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { User, UserDocument } from "./schemas/user.schema";
+import { AddToWishlistDto } from "./DTOs/add-to-wishlist.dto";
+import { Product } from "../product/schemas/product.schema";
+import { RemoveFromWishlistDto } from "./DTOs/remove-from-wishlist.dto";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(Product.name) private productModel: Model<Product>,
+    @InjectModel(Product.name) private productModel: Model<Product>
   ) {}
 
   async getUserById(id: string): Promise<UserDocument | null> {
@@ -21,19 +21,19 @@ export class UserService {
     const { productId, userId } = addToWishlistDto;
 
     const product = await this.productModel.findById(productId);
-    if (!product) throw new BadRequestException('Product not found.');
+    if (!product) throw new BadRequestException("Product not found.");
 
     const user = this.userModel.findById(userId);
-    if (!user) throw new BadRequestException('User not found.');
+    if (!user) throw new BadRequestException("User not found.");
 
     await this.userModel.findByIdAndUpdate(
       userId,
       {
         $push: {
-          wishlist: productId,
-        },
+          wishlist: productId
+        }
       },
-      { runValidators: true },
+      { runValidators: true }
     );
   }
 
@@ -41,19 +41,19 @@ export class UserService {
     const { productId, userId } = removeFromWishlistDto;
 
     const product = await this.productModel.findById(productId);
-    if (!product) throw new BadRequestException('Product not found.');
+    if (!product) throw new BadRequestException("Product not found.");
 
     const user = this.userModel.findById(userId);
-    if (!user) throw new BadRequestException('User not found.');
+    if (!user) throw new BadRequestException("User not found.");
 
     await this.userModel.findByIdAndUpdate(
       userId,
       {
         $pull: {
-          wishlist: productId,
-        },
+          wishlist: productId
+        }
       },
-      { runValidators: true },
+      { runValidators: true }
     );
   }
 }

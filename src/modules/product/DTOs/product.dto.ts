@@ -1,4 +1,4 @@
-import { ProductDocument } from '../schemas/product.schema';
+import { ProductDocument } from "../schemas/product.schema";
 
 export class ProductDto {
   constructor(product: ProductDocument) {

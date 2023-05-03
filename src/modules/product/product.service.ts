@@ -1,14 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { ProductDto } from './DTOs/product.dto';
-import { Product, ProductDocument } from './schemas/product.schema';
-import { ProductSearchFilters } from './types/ProductSearchFilters';
-import { ProductQueryResponse } from './types/ProductQueryResponse';
-import { ProductUtilities } from './utils/ProductUtilities';
-import { CreateProductDto } from './DTOs/create-product.dto';
-import { UpdateProductDto } from './DTOs/update-product-dto';
-import { ProductFiltersDto } from './DTOs/product-filters.dto';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { ProductDto } from "./DTOs/product.dto";
+import { Product, ProductDocument } from "./schemas/product.schema";
+import { ProductSearchFilters } from "./types/ProductSearchFilters";
+import { ProductQueryResponse } from "./types/ProductQueryResponse";
+import { ProductUtilities } from "./utils/ProductUtilities";
+import { CreateProductDto } from "./DTOs/create-product.dto";
+import { UpdateProductDto } from "./DTOs/update-product-dto";
+import { ProductFiltersDto } from "./DTOs/product-filters.dto";
 
 @Injectable()
 export class ProductService {
@@ -25,13 +25,13 @@ export class ProductService {
     const totalPages = Math.ceil(queryCount / pageSize);
 
     const response = {
-      products: queryResponse.map((product) => new ProductDto(product)),
+      products: queryResponse.map(product => new ProductDto(product)),
       pagination: {
         currentPage: page,
         pageSize,
         resultsCount: queryCount,
-        totalPages,
-      },
+        totalPages
+      }
     };
 
     return response;
@@ -39,17 +39,17 @@ export class ProductService {
 
   async getProductById(id: string): Promise<ProductDto> {
     const product: ProductDocument = await this.productModel.findById(id);
-    if (!product) throw new BadRequestException('Product not found.');
+    if (!product) throw new BadRequestException("Product not found.");
 
     return new ProductDto(product);
   }
 
   async getProductsByCategory(categoryName: string): Promise<ProductDto[]> {
     const products = await this.productModel.find({
-      categories: { $in: [categoryName] },
+      categories: { $in: [categoryName] }
     });
 
-    return products.map((product) => new ProductDto(product));
+    return products.map(product => new ProductDto(product));
   }
 
   async createProduct(createProductDto: CreateProductDto): Promise<ProductDto> {
@@ -60,10 +60,14 @@ export class ProductService {
   }
 
   async updateProduct(updateProductDto: UpdateProductDto): Promise<ProductDto> {
-    const updatedProduct = await this.productModel.findByIdAndUpdate(updateProductDto._id, updateProductDto, {
-      runValidators: true,
-      new: true,
-    });
+    const updatedProduct = await this.productModel.findByIdAndUpdate(
+      updateProductDto._id,
+      updateProductDto,
+      {
+        runValidators: true,
+        new: true
+      }
+    );
 
     return new ProductDto(updatedProduct);
   }
@@ -80,37 +84,37 @@ export class ProductService {
     const brands = await this.productModel.aggregate([
       {
         $group: {
-          _id: '$brand',
-          count: { $sum: 1 },
-        },
+          _id: "$brand",
+          count: { $sum: 1 }
+        }
       },
       {
-        $sort: { _id: 1 },
-      },
+        $sort: { _id: 1 }
+      }
     ]);
 
     const sizes = await this.productModel.aggregate([
       {
         $group: {
-          _id: '$size',
-          count: { $sum: 1 },
-        },
+          _id: "$size",
+          count: { $sum: 1 }
+        }
       },
       {
-        $sort: { _id: 1 },
-      },
+        $sort: { _id: 1 }
+      }
     ]);
 
     const colors = await this.productModel.aggregate([
       {
         $group: {
-          _id: '$color',
-          count: { $sum: 1 },
-        },
+          _id: "$color",
+          count: { $sum: 1 }
+        }
       },
       {
-        $sort: { _id: 1 },
-      },
+        $sort: { _id: 1 }
+      }
     ]);
 
     return new ProductFiltersDto({ brands, colors, sizes });

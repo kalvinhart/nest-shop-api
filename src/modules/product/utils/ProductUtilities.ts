@@ -1,23 +1,20 @@
-import { ProductSearchFilters } from '../types/ProductSearchFilters';
+import { ProductSearchFilters } from "../types/ProductSearchFilters";
 
 export class ProductUtilities {
-  static buildQueryFromSearchFilters(
-    query: any,
-    searchFilters: ProductSearchFilters,
-  ) {
+  static buildQueryFromSearchFilters(query: any, searchFilters: ProductSearchFilters) {
     const { name, brand, category, sort, page, pageSize } = searchFilters;
 
     if (category) {
-      query.where('categories', category);
+      query.where("categories", category);
     }
 
     if (name) {
-      const nameQuery = new RegExp(name, 'i');
+      const nameQuery = new RegExp(name, "i");
       query.where({ name: nameQuery });
     }
 
     if (brand) {
-      const brands = brand.split(',');
+      const brands = brand.split(",");
       const regex = this.convertToRegex(brands);
 
       query.where({ brand: { $in: regex } });
@@ -30,6 +27,6 @@ export class ProductUtilities {
   }
 
   static convertToRegex(array) {
-    return array.map((item) => new RegExp(`^${item}`, 'i'));
+    return array.map(item => new RegExp(`^${item}`, "i"));
   }
 }

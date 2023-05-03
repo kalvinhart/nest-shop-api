@@ -1,7 +1,7 @@
-import * as mongoose from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { Category } from './category.schema';
+import * as mongoose from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
+import { Category } from "./category.schema";
 
 export type SubcategoryDocument = HydratedDocument<Subcategory>;
 
@@ -9,11 +9,11 @@ export type SubcategoryDocument = HydratedDocument<Subcategory>;
 export class Subcategory {
   @Prop({
     required: true,
-    unique: true,
+    unique: true
   })
   name: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Category" })
   parent: Category;
 }
 

@@ -1,6 +1,6 @@
-import { registerAs } from '@nestjs/config';
-import { Config } from 'src/modules/core/enums/Config';
+import { registerAs } from "@nestjs/config";
+import { Config } from "src/modules/core/enums/Config";
 
 export default registerAs(Config.DATABASE, () => ({
-  host: process.env.MONGO_URI,
+  host: process.env.MONGO_URI
 }));

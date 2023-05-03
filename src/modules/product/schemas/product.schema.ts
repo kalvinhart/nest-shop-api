@@ -1,24 +1,24 @@
-import * as mongoose from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { Category } from 'src/modules/categories/schemas/category.schema';
+import * as mongoose from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
+import { Category } from "src/modules/categories/schemas/category.schema";
 
 export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({ timestamps: true })
 export class Product {
   @Prop({
-    required: true,
+    required: true
   })
   name: string;
 
   @Prop({
-    required: true,
+    required: true
   })
   brand: string;
 
   @Prop({
-    required: true,
+    required: true
   })
   price: number;
 
@@ -26,7 +26,7 @@ export class Product {
   description: string;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }]
   })
   categories: Category[];
 

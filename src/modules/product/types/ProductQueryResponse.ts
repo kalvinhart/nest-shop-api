@@ -1,4 +1,4 @@
-import { ProductDto } from '../DTOs/product.dto';
+import { ProductDto } from "../DTOs/product.dto";
 
 export type ProductQueryResponse = {
   products: ProductDto[];

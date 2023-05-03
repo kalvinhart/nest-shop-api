@@ -1,4 +1,4 @@
-import { UserDocument } from '../schemas/user.schema';
+import { UserDocument } from "../schemas/user.schema";
 
 export class UserDto {
   constructor(user: UserDocument) {

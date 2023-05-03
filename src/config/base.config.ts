@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { Config } from 'src/modules/core/enums/Config';
+import { registerAs } from "@nestjs/config";
+import { Config } from "src/modules/core/enums/Config";
 
 export type BaseConfig = {
   port: number;
@@ -8,5 +8,5 @@ export type BaseConfig = {
 
 export default registerAs(Config.BASE, () => ({
   port: parseInt(process.env.PORT, 10) || 4200,
-  jwtKey: process.env.JWT_KEY,
+  jwtKey: process.env.JWT_KEY
 }));

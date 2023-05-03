@@ -1,8 +1,8 @@
-import * as mongoose from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { UserAddress } from './user-address.schema';
-import { UserWishlist } from './user-wishlist.schema';
-import { HydratedDocument } from 'mongoose';
+import * as mongoose from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { UserAddress } from "./user-address.schema";
+import { UserWishlist } from "./user-wishlist.schema";
+import { HydratedDocument } from "mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -10,32 +10,32 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   @Prop({
     required: true,
-    unique: true,
+    unique: true
   })
   email: string;
 
   @Prop({
     required: true,
-    minlength: 6,
+    minlength: 6
   })
   password: string;
 
   @Prop({
-    minlength: 2,
+    minlength: 2
   })
   firstName: string;
 
   @Prop({
-    minlength: 2,
+    minlength: 2
   })
   lastName: string;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserAddress' }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "UserAddress" }]
   })
   address: UserAddress[];
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserWishList' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "UserWishList" })
   wishlist: UserWishlist;
 }
 
