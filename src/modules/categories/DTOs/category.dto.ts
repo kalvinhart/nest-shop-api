@@ -1,5 +1,4 @@
-import { ObjectId } from 'mongoose';
-import { CategoryDocument } from '../schemas/category.schema';
+import { CategoryDocument } from "../schemas/category.schema";
 
 export class CategoryDto {
   constructor(category: CategoryDocument) {
