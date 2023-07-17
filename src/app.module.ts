@@ -1,32 +1,40 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { ProductModule } from './product/product.module';
-import { UserController } from './user/user.controller';
-import { AuthModule } from './auth/auth.module';
-import { AuthController } from './auth/auth.controller';
-import { UserService } from './user/user.service';
-import { DatabaseModule } from './database/database.module';
-import { AuthService } from './auth/auth.service';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule } from '@nestjs/config';
-import { CategoriesModule } from './categories/categories.module';
-import config from './config/config';
+import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
+import { ConfigModule } from "@nestjs/config";
+import { CoreModule } from "./modules/core/core.module";
+import baseConfig from "./config/base.config";
+import databaseConfig from "./config/database.config";
+import { AuthController } from "./modules/auth/auth.controller";
+import { AuthModule } from "./modules/auth/auth.module";
+import { AuthService } from "./modules/auth/auth.service";
+import { CategoriesModule } from "./modules/categories/categories.module";
+import { DatabaseModule } from "./modules/database/database.module";
+import { ProductModule } from "./modules/product/product.module";
+import { UserController } from "./modules/user/user.controller";
+import { UserModule } from "./modules/user/user.module";
+import { UserService } from "./modules/user/user.service";
+import { PaymentsModule } from "./modules/payments/payments.module";
+import { OrdersModule } from "./modules/orders/orders.module";
+import stripeConfig from "./config/stripe.config";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [config],
+      load: [baseConfig, databaseConfig, stripeConfig],
+      isGlobal: true,
+      cache: true
     }),
     UserModule,
     ProductModule,
     AuthModule,
     DatabaseModule,
-    JwtModule,
+    JwtModule.register({ global: true }),
     CategoriesModule,
+    CoreModule,
+    PaymentsModule,
+    OrdersModule
   ],
-  controllers: [AppController, UserController, AuthController],
-  providers: [AppService, UserService, AuthService],
+  controllers: [UserController, AuthController],
+  providers: [UserService, AuthService]
 })
 export class AppModule {}
